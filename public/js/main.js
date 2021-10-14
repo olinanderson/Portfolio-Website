@@ -13,15 +13,20 @@
 
   let particlesArray;
 
-  var particleColor = "#212121";
+  var particleColor1 = "#eb4034";
+  var particleColor2 = "#2ed9bc";
+  var particleColor3 = "#2b2bd9";
   var rgbValues = "38, 38, 38";
   var scrollHeight = 0;
+  var fillValue = 0;
+
+  var mouseSize = 120;
 
   // Get mouse position
   let mouse = {
     x: null,
     y: null,
-    radius: (canvas.height / 100) * (canvas.width / 100),
+    radius: (canvas.height / mouseSize) * (canvas.width / mouseSize),
   };
 
   window.addEventListener("mousemove", (event) => {
@@ -44,7 +49,7 @@
     draw() {
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-      ctx.fillStyle = particleColor;
+      ctx.fillStyle = this.color;
       ctx.fill();
     }
 
@@ -126,11 +131,26 @@
       let size = Math.random() * 3 + 1;
       let x = Math.random() * (innerWidth - size * 2 - size * 2) + size * 2;
       let y = Math.random() * (innerHeight - size * 2 - size * 2) + size * 2;
-      let directionX = (Math.random() * 5 - 2.5) / 3;
-      let directionY = (Math.random() * 5 - 2.5) / 3;
-      particlesArray.push(
-        new Particle(x, y, directionX, directionY, size, particleColor)
-      );
+      let directionX = (Math.random() + -Math.random()) / 2; // Random number between -1 and 1
+      let directionY = (Math.random() + -Math.random()) / 2;
+      console.log("directionX:", directionX);
+      console.log("directionY:", directionY);
+      fillValue = Math.random();
+      if (fillValue <= 1 / 3) {
+        particlesArray.push(
+          new Particle(x, y, directionX, directionY, size, particleColor1)
+        );
+      }
+      if (fillValue > 1 / 3 && fillValue < 2 / 3) {
+        particlesArray.push(
+          new Particle(x, y, directionX, directionY, size, particleColor2)
+        );
+      }
+      if (fillValue >= 2 / 3) {
+        particlesArray.push(
+          new Particle(x, y, directionX, directionY, size, particleColor3)
+        );
+      }
     }
   };
 
@@ -150,7 +170,7 @@
   window.addEventListener("resize", () => {
     canvas.width = innerWidth;
     canvas.height = innerHeight;
-    mouse.radius = (canvas.height / 100) * (canvas.height / 100);
+    mouse.radius = (canvas.height / mouseSize) * (canvas.height / mouseSize);
     init();
   });
 
@@ -291,7 +311,7 @@
   $(window).trigger("scroll");
   $(window).on("scroll", function () {
     var pixels = 50;
-    var top = 1200;
+    var top = mouseSize;
     scrollHeight = $(window).scrollTop();
 
     if ($(window).scrollTop() > pixels) {
@@ -332,4 +352,18 @@
       },
     },
   });
+
+  // Portfolio Description
+  $(".work-box").on("click", () => {
+    console.log("clicked on the work box");
+  });
+
+  // Title animation
+  var titleString = "</>----------------------------------";
+  setInterval(() => {
+    titleString =
+      titleString[titleString.length - 1] + titleString.slice(0, -1);
+
+    // $("#title").html(titleString);
+  }, 500);
 })(jQuery);
