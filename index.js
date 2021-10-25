@@ -51,7 +51,7 @@ app.post("/send", (req, res) => {
           });
         } else {
           res.status(200).send({
-            message: "Message successfully sent. Thanks for getting in touch!",
+            message: "Your message was sent successfully.",
             status: "success",
           });
         }

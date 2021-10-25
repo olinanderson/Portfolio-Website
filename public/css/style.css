@@ -15,6 +15,11 @@
   box-sizing: border-box;
 }
 
+img.article-image {
+  margin-left: 20%;
+  padding: 20px;
+}
+
 #canvas1 {
   position: absolute;
   top: 0;
@@ -1091,6 +1096,10 @@ a:hover {
 
 .contact-mf {
   margin-top: 4rem;
+}
+
+#contact .loading-message {
+  text-align: center;
 }
 
 /*======================================
