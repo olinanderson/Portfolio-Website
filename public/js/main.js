@@ -200,6 +200,9 @@
           $("#contact").html(
             "<h3 class='loading-message'>" + json.message + "</h3>"
           );
+          if (json.message !== "Loading") {
+            loading = false;
+          }
         }) //print data to console
         .catch((err) => console.log("Request Failed", err)); // Catch errors
     };
@@ -207,7 +210,6 @@
     const formEvent = form.addEventListener("submit", (e) => {
       loading = true;
       LoadingDots();
-
       e.preventDefault();
 
       let mail = new FormData(form);
@@ -218,13 +220,17 @@
     const LoadingDots = () => {
       let i = 0;
       if (loading) {
-        $("#contact").html("<h3 class='loading-message'>Loading</h3>");
+        $("#contact").html(
+          "<h3 class='loading-message' id='loading'>Loading</h3>"
+        );
         setInterval(() => {
           $("#loading").append(".");
           i++;
 
-          if (i == 4) {
-            $("#loading").html(originalText);
+          if (i == 4 && loading) {
+            $("#contact").html(
+              "<h3 class='loading-message' id='loading'>Loading</h3>"
+            );
             i = 0;
           }
         }, 500);
@@ -358,9 +364,35 @@
     },
   });
 
-  // Portfolio Description
+  // Lofi player animations
+  var lofiPlayerShown = false;
+  var workBoxClicked = false;
+  var descriptionClicked = false;
+  $("#lofi-player").hide();
+
+  $(document).click((event) => {
+    if (!$(event.target).closest("#lofi-player").length) {
+      if (!lofiPlayerShown && workBoxClicked) {
+        $("#lofi-player").fadeIn("400");
+        // $("#lofi-player").show()
+        lofiPlayerShown = true;
+      }
+      if (lofiPlayerShown && !workBoxClicked && !descriptionClicked) {
+        $("#lofi-player").fadeOut("400");
+        // $("#lofi-player").hide()
+        lofiPlayerShown = false;
+      }
+    }
+    workBoxClicked = false;
+    descriptionClicked = false;
+  });
+
   $(".work-box").on("click", () => {
-    console.log("clicked on the work box");
+    workBoxClicked = true;
+  });
+
+  $("#lofi-player").on("click", () => {
+    descriptionClicked = true;
   });
 
   // Title animation

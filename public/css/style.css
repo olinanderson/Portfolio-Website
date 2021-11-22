@@ -1163,6 +1163,34 @@ footer .credits a {
 }
 
 /*======================================
+//--//-->   work description
+======================================*/
+
+.work-description {
+  position: fixed;
+  top: 11%;
+  z-index: 3;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.work-description .work-background {
+  width: calc(100% + 6rem);
+}
+
+.work-description .exit-icon {
+  font-size: 2rem;
+  position: relative;
+  right: 5px;
+}
+
+div.about-info a {
+  margin: 15px 15px 15px 0;
+}
+
+/*======================================
 //--//-->   BUTTON
 ======================================*/
 
