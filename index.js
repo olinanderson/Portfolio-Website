@@ -8,15 +8,6 @@ require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-var transporter = nodemailer.createTransport(
-  smtpTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.EMAIL,
-      pass: process.env.PASSWORD,
-    },
-  })
-);
 
 app.use(express.static(__dirname + "/public"));
 
@@ -28,13 +19,22 @@ app.route("/").get(function (req, res) {
 app.post("/send", (req, res) => {
   //1.
   let form = new multiparty.Form();
-  let data = {};
+
+  
+const transporter = nodemailer.createTransport({
+  host: 'smtp.ethereal.email',
+  port: 587,
+  auth: {
+      user: 'robert.crist99@ethereal.email',
+      pass: '4ZXNsS8yqxKJ74zQfa'
+  }
+});
 
   form.parse(req, function (err, fields) {
     if (fields !== undefined) {
       //2. You can configure the object however you want
       const mail = {
-        from: `OA - ${fields.name[0]} <${fields.email[0]}>`,
+        from: `Portfolio - ${fields.name[0]} <${fields.email[0]}>`,
         to: "olin.anderson@ucalgary.ca",
         subject: fields.subject[0],
         text: `${fields.message[0]}`,
@@ -50,6 +50,12 @@ app.post("/send", (req, res) => {
             status: "fail",
           });
         } else {
+          console.log("Message sent: %s", info.messageId);
+          // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+        
+          // Preview only available when sending through an Ethereal account
+          console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+          // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
           res.status(200).send({
             message: "Your message was sent successfully.",
             status: "success",
