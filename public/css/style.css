@@ -816,6 +816,8 @@ a:hover {
 .work-img {
   display: block;
   overflow: hidden;
+  height: 233.33px;
+  background-color: black;
 }
 
 .work-img img {
@@ -1170,7 +1172,7 @@ footer .credits a {
   position: fixed;
   top: 11%;
   z-index: 3;
-  left: 0;
+  left: -33.5px;
   right: 0;
   margin-left: auto;
   margin-right: auto;

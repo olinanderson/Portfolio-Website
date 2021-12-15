@@ -108,9 +108,9 @@
         for (let b = 0; b < particlesArray.length; b++) {
           let distance =
             (particlesArray[a].x - particlesArray[b].x) *
-              (particlesArray[a].x - particlesArray[b].x) +
+            (particlesArray[a].x - particlesArray[b].x) +
             (particlesArray[a].y - particlesArray[b].y) *
-              (particlesArray[a].y - particlesArray[b].y);
+            (particlesArray[a].y - particlesArray[b].y);
 
           if (distance < (canvas.width / 7) * (canvas.height / 7)) {
             opacityValue = 1 - distance / 20000;
@@ -288,7 +288,7 @@
   $('a.js-scroll[href*="#"]:not([href="#"])').on("click", function () {
     if (
       location.pathname.replace(/^\//, "") ==
-        this.pathname.replace(/^\//, "") &&
+      this.pathname.replace(/^\//, "") &&
       location.hostname == this.hostname
     ) {
       var target = $(this.hash);
@@ -365,35 +365,36 @@
   });
 
   // Lofi player animations
-  var lofiPlayerShown = false;
-  var workBoxClicked = false;
-  var descriptionClicked = false;
+  var modalShown = false;
+
+  // hiding all modals 
+  $("#cocktail-api").hide();
   $("#lofi-player").hide();
 
-  $(document).click((event) => {
-    if (!$(event.target).closest("#lofi-player").length) {
-      if (!lofiPlayerShown && workBoxClicked) {
-        $("#lofi-player").fadeIn("400");
-        // $("#lofi-player").show()
-        lofiPlayerShown = true;
-      }
-      if (lofiPlayerShown && !workBoxClicked && !descriptionClicked) {
-        $("#lofi-player").fadeOut("400");
-        // $("#lofi-player").hide()
-        lofiPlayerShown = false;
+
+
+  const checkModals = (event, modalId, workboxId) => {
+
+    // checking if the modal isn't clicked
+    if (!$(event.target).closest(modalId).length) {
+      if (!modalShown && $(event.target).closest(workboxId).length) {
+        $(modalId).fadeIn("400");
+        modalShown = true;
+      } else {
+        $(modalId).fadeOut("400");
+        modalShown = false;
       }
     }
-    workBoxClicked = false;
-    descriptionClicked = false;
+  }
+
+  $(document).click((event) => {
+    checkModals(event, "#cocktail-api", "#cocktail-workbox")
+    checkModals(event, "#lofi-player", "#lofi-workbox")
   });
 
-  $(".work-box").on("click", () => {
-    workBoxClicked = true;
-  });
 
-  $("#lofi-player").on("click", () => {
-    descriptionClicked = true;
-  });
+
+
 
   // Title animation
   var titleString = "</>----------------------------------";
