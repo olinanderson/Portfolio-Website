@@ -1172,7 +1172,7 @@ footer .credits a {
   position: fixed;
   top: 11%;
   z-index: 3;
-  left: -33.5px;
+  left: 0;
   right: 0;
   margin-left: auto;
   margin-right: auto;
